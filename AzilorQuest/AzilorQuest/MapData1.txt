@@ -1,0 +1,35 @@
+﻿0,0,1,1,East,**Entrance Description**
+1,0,-1,1,West East,**Default Level 1**
+2,0,2,1,West South,**Default w/Bend Level 1**
+2,1,-1,1,North South,**Default Level 1**
+2,2,3,1,North South,**Default level 1**
+2,3,-1,1,North East,**Default w/Bend Level 1**
+3,3,-1,1,West East,**Default Level 1**
+4,3,4,1,West East,**Default Level 1**
+5,3,-1,1,North West South,**Default Level 1**
+5,2,-1,1,North South,**Default Level 1**
+5,1,-1,1,North South,**Default Level 1**
+5,0,-1,1,West South,**Default Level 1**
+4,0,-1,1,West East,**Default Level 1**
+3,0,5,1,East,**Default Level 1**
+5,4,-1,1,North South,**Default Level 1**
+5,5,6,1,North East,**Default Level 1**
+6,5,-1,1,West East,**Default Level 1**
+7,5,-1,1,West East,**Default Level 1**
+8,5,-1,1,West East,**Default Level 1**
+9,5,-1,1,North West South East,**Default Level 1**
+9,4,-1,1,North South,**Default Level 1**
+9,3,-1,1,South East,**Default Level 1**
+10,3,-1,1,North West,**Default Level 1**
+10,2,-1,1,West South,**Default Level 1**
+9,2,7,1,East,**Default Level 1**
+10,5,-1,1,West East,**Default Level 1**
+11,5,-1,1,West East,**Default Level 1**
+12,5,-1,1,North West,**Default Level 1**
+12,4,-1,1,South East,**Default Level 1**
+13,4,-1,1,West East,**Default Level 1**
+14,4,-1,1,West South,**Default Level 1**
+14,5,8,1,North,**Default Level 1**
+9,6,-1,1,North South,**Default Level 1**
+9,7,-1,1,North South,**Boss Threshold**
+9,8,9,1,North South,**Boss Room**

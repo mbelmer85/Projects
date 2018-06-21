@@ -1,0 +1,24 @@
+C:\Users\Mitch\source\repos\AzilorQuest\AzilorQuest\bin\Debug\MapData1.txt
+C:\Users\Mitch\source\repos\AzilorQuest\AzilorQuest\bin\Debug\MapData.txt
+C:\Users\Mitch\source\repos\AzilorQuest\AzilorQuest\bin\Debug\bin\Debug\MapData.txt
+C:\Users\Mitch\source\repos\AzilorQuest\AzilorQuest\bin\Debug\Oops I Fell In A Dungeon.exe.config
+C:\Users\Mitch\source\repos\AzilorQuest\AzilorQuest\bin\Debug\Oops I Fell In A Dungeon.exe.manifest
+C:\Users\Mitch\source\repos\AzilorQuest\AzilorQuest\bin\Debug\Oops I Fell In A Dungeon.application
+C:\Users\Mitch\source\repos\AzilorQuest\AzilorQuest\bin\Debug\Oops I Fell In A Dungeon.exe
+C:\Users\Mitch\source\repos\AzilorQuest\AzilorQuest\bin\Debug\Oops I Fell In A Dungeon.pdb
+C:\Users\Mitch\source\repos\AzilorQuest\AzilorQuest\obj\Debug\Oops I Fell In A Dungeon.g.resources
+C:\Users\Mitch\source\repos\AzilorQuest\AzilorQuest\obj\Debug\AzilorQuest.BattleForm.resources
+C:\Users\Mitch\source\repos\AzilorQuest\AzilorQuest\obj\Debug\AzilorQuest.AzQuest.resources
+C:\Users\Mitch\source\repos\AzilorQuest\AzilorQuest\obj\Debug\AzilorQuest.Inventory.resources
+C:\Users\Mitch\source\repos\AzilorQuest\AzilorQuest\obj\Debug\AzilorQuest.Properties.Resources.resources
+C:\Users\Mitch\source\repos\AzilorQuest\AzilorQuest\obj\Debug\AzilorQuest.csproj.GenerateResource.Cache
+C:\Users\Mitch\source\repos\AzilorQuest\AzilorQuest\obj\Debug\AzilorQuest.csproj.CoreCompileInputs.cache
+C:\Users\Mitch\source\repos\AzilorQuest\AzilorQuest\obj\Debug\Oops I Fell In A Dungeon.exe.manifest
+C:\Users\Mitch\source\repos\AzilorQuest\AzilorQuest\obj\Debug\Oops I Fell In A Dungeon.application
+C:\Users\Mitch\source\repos\AzilorQuest\AzilorQuest\obj\Debug\Oops I Fell In A Dungeon.exe
+C:\Users\Mitch\source\repos\AzilorQuest\AzilorQuest\obj\Debug\Oops I Fell In A Dungeon.pdb
+C:\Users\Mitch\source\repos\AzilorQuest\AzilorQuest\obj\Debug\AzilorQuest.csprojResolveAssemblyReference.cache
+C:\Users\Mitch\source\repos\AzilorQuest\AzilorQuest\obj\Debug\AzilorQuest.Map.resources
+C:\Users\Mitch\source\repos\AzilorQuest\AzilorQuest\obj\Debug\AzilorQuest.Quit.resources
+C:\Users\Mitch\source\repos\AzilorQuest\AzilorQuest\obj\Debug\AzilorQuest.Instructions.resources
+C:\Users\Mitch\source\repos\AzilorQuest\AzilorQuest\obj\Debug\AzilorQuest.Welcome.resources
