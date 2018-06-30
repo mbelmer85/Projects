@@ -1,0 +1,309 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{5CE672E8-B23E-4BCF-94F9-38D9A7A1AF53}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>AzilorQuest</RootNamespace>
+    <AssemblyName>Oops I Fell In A Dungeon</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>E:\OIFIAD\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <AutorunEnabled>true</AutorunEnabled>
+    <ApplicationRevision>8</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>1C57FB182CD47ECCE83E5D28A86998AFB8A67446</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>AzilorQuest_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>true</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>true</SignManifests>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BattleForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BattleForm.Designer.cs">
+      <DependentUpon>BattleForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="InstructionsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="InstructionsForm.Designer.cs">
+      <DependentUpon>InstructionsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="InventoryForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="InventoryForm.Designer.cs">
+      <DependentUpon>InventoryForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MapForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MapForm.Designer.cs">
+      <DependentUpon>MapForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="QuitForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="QuitForm.Designer.cs">
+      <DependentUpon>QuitForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WelcomeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WelcomeForm.Designer.cs">
+      <DependentUpon>WelcomeForm.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="BattleForm.resx">
+      <DependentUpon>BattleForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="InstructionsForm.resx">
+      <DependentUpon>InstructionsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="InventoryForm.resx">
+      <DependentUpon>InventoryForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MapForm.resx">
+      <DependentUpon>MapForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="QuitForm.resx">
+      <DependentUpon>QuitForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WelcomeForm.resx">
+      <DependentUpon>WelcomeForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="AzilorQuest_TemporaryKey.pfx" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Images\east.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Images\north.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Images\south.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Images\west.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Images\Hero.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Images\button_stats.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Images\button_equipment.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Images\button_attack.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Images\button_defend.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Images\button_rest.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Images\button_save.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Images\button_quit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Images\Background.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Images\Look.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Images\EndBattle.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Images\Dungeon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.6.1 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\MapData.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Data\MapData.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <PublishFile Include="MapData.txt">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>DataFile</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>File</FileType>
+    </PublishFile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Images\runBtn.png" />
+    <None Include="Resources\Images\noWall.png" />
+    <None Include="Resources\Images\noTile.png" />
+    <None Include="Resources\Images\westWall.png" />
+    <None Include="Resources\Images\westSouthWall.png" />
+    <None Include="Resources\Images\westSouthEastWall.png" />
+    <None Include="Resources\Images\westEastWall.png" />
+    <None Include="Resources\Images\southWall.png" />
+    <None Include="Resources\Images\southEastWall.png" />
+    <None Include="Resources\Images\northWestWall.png" />
+    <None Include="Resources\Images\northWestSouthWall.png" />
+    <None Include="Resources\Images\northWestEastWall.png" />
+    <None Include="Resources\Images\northWall.png" />
+    <None Include="Resources\Images\northSouthWall.png" />
+    <None Include="Resources\Images\northSouthEastWall.png" />
+    <None Include="Resources\Images\northEastWall.png" />
+    <None Include="Resources\Images\TurnRight.png" />
+    <None Include="Resources\Images\TurnLeft.png" />
+    <None Include="Resources\Images\Skeleton.png" />
+    <None Include="Resources\Images\rat.png" />
+    <None Include="Resources\Images\Snake.png" />
+    <None Include="Resources\Images\Snake.bmp" />
+    <None Include="Resources\Images\Supply_Bag.png" />
+    <None Include="Resources\Images\Use.png" />
+    <None Include="Resources\Images\Equip.png" />
+    <None Include="Resources\Images\Info.png" />
+    <None Include="Resources\Images\InventoryBackground.png" />
+    <None Include="Resources\Images\Item.png" />
+    <None Include="Resources\Images\Harpy.png" />
+    <None Include="Resources\Images\MapArrowEast.png" />
+    <None Include="Resources\Images\MapArrowNorth.png" />
+    <None Include="Resources\Images\MapArrowSouth.png" />
+    <None Include="Resources\Images\MapArrowWest.png" />
+    <None Include="Resources\Images\Inventory.png" />
+    <None Include="Resources\Images\Map.png" />
+    <None Include="Resources\Images\eastWall.png" />
+    <None Include="Resources\Images\fleeBtn.png" />
+    <None Include="Resources\Images\fightOnBtn.png" />
+    <None Include="Resources\Images\IntroductionBackground.png" />
+    <None Include="Resources\Images\InstructionBackground.png" />
+    <Resource Include="Resources\Images\Slime.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Images\GiantToad.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Images\Spider.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Images\Wolf.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GameLogicLibrary\GameLogicLibrary.csproj">
+      <Project>{244a530b-971b-4f88-a898-9e538c041db5}</Project>
+      <Name>GameLogicLibrary</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

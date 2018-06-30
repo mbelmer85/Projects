@@ -93,7 +93,7 @@
             this.currentHP.Name = "currentHP";
             this.currentHP.Size = new System.Drawing.Size(37, 16);
             this.currentHP.TabIndex = 9;
-            this.currentHP.Text = "HP: ";
+            this.currentHP.Text = "Hp: ";
             // 
             // currentExp
             // 

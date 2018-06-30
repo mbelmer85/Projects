@@ -1,15 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using AzilorQuest.Properties;
-using System.Threading;
-
+using GameLogicLibrary;
 
 namespace AzilorQuest
 {
@@ -18,10 +14,10 @@ namespace AzilorQuest
         //GLOBALS
         private string monster;
         private Monster creature;
-        private Azilor hero;
+        private Hero hero;
         private Random rand;
         private List<MapTile> area;
-        private AzQuest form1;
+        private Game form1;
         private bool activeAction;
         private static SemaphoreSlim semaphoreSlim;
         private static SemaphoreSlim eventSemaphore;
@@ -34,11 +30,11 @@ namespace AzilorQuest
         }
 
         //BATTLEFORM CONSTRUCTOR
-        public BattleForm(string mob, Azilor character, List<MapTile> location, AzQuest form)
+        public BattleForm(string mob, Hero character, List<MapTile> location, Game form)
         {
             InitializeComponent();
             Monster = mob;
-            creature = new AzilorQuest.Monster(mob);
+            creature = new Monster(mob);
             hero = character;
             rand = new Random();
             area = location;
@@ -55,8 +51,8 @@ namespace AzilorQuest
             //SET INACTIVE BUTTON
             activeAction = false;
 
-            //SET CURRENT HP & MP
-            currentHP.Text = "HP:  " + hero.HP;
+            //SET CURRENT Hp & MP
+            currentHP.Text = "Hp:  " + hero.Hp;
             currentExp.Text = "Exp: " + hero.Exp;
 
             //SET MONSTER IMAGE
@@ -129,7 +125,7 @@ namespace AzilorQuest
                 activeAction = true;
                 heroAttack();
                 mobAttack(1);
-                currentHP.Text = "HP:  " + hero.HP;
+                currentHP.Text = "Hp:  " + hero.Hp;
                 //eventTimer.Start();
             }
             else
@@ -142,13 +138,13 @@ namespace AzilorQuest
         {
             activeAction = true;
             heroDefend();
-            currentHP.Text = "HP:  " + hero.HP;
+            currentHP.Text = "Hp:  " + hero.Hp;
             eventTimer.Start();
         }
 
         private void label1_Click(object sender, EventArgs e)
         {
-            Inventory inv = new Inventory(hero, form1, this);
+            InventoryForm inv = new InventoryForm(hero, form1, this);
             inv.ShowDialog();
         }
 
@@ -179,7 +175,7 @@ namespace AzilorQuest
         async private void heroAttack()
         {
             int ranGen = rand.Next(99) + 1;
-            if (creature.Alive && hero.HP >= 1)
+            if (creature.Alive && hero.Hp >= 1)
             {
                 await eventSemaphore.WaitAsync();
                 activeAction = true;
@@ -196,7 +192,7 @@ namespace AzilorQuest
                         int damage = hero.Str + hero.Equipment[0].Power + ranGen / 20 - creature.Con;
                         if (damage > 0)
                         {
-                            creature.HP = creature.HP - damage;
+                            creature.Hp = creature.Hp - damage;
                             delayPrintLine(userDisplay, "You hit the " + monster + " for " + damage + " damage!");
                             //userDisplay.AppendText(Environment.NewLine);
                         }
@@ -206,7 +202,7 @@ namespace AzilorQuest
                             //userDisplay.AppendText(Environment.NewLine);
                         }
                         await Task.Delay(250);
-                        if (creature.HP < 1)
+                        if (creature.Hp < 1)
                         {
                             creature.Alive = false;
                             delayPrintLine(userDisplay, "The " + monster + " has been slain.");
@@ -215,8 +211,8 @@ namespace AzilorQuest
                             delayPrintLine(userDisplay, "You have gained " + creature.Exp + "EXP.");
                             //userDisplay.AppendText(Environment.NewLine);
                             hero.Exp += creature.Exp;
-                            hero.TNL -= creature.Exp;
-                            area[hero.Location].EventID = -1;
+                            hero.Tnl -= creature.Exp;
+                            area[hero.Location].EventId = -1;
                             currentExp.Text = "Exp: " + hero.Exp;
 
                             //20% chance to get drop
@@ -247,16 +243,16 @@ namespace AzilorQuest
                                 //    battleDisplay.Items.Add("YOU GET NOTHING");
                                 //}
                             }
-                            if (hero.TNL <= 0)
+                            if (hero.Tnl <= 0)
                             {
                                 delayPrintLine(userDisplay, "You've gained a level!!");
                                 //userDisplay.AppendText(Environment.NewLine);
                                 await Task.Delay(250);
-                                hero.levelUp();
+                                hero.LevelUp();
                                 delayPrintLine(userDisplay, " Level:       " + hero.Level);
                                 //userDisplay.AppendText(Environment.NewLine);
                                 await Task.Delay(250);
-                                delayPrintLine(userDisplay, "  Max HP:     " + hero.MaxHP);
+                                delayPrintLine(userDisplay, "  Max Hp:     " + hero.MaxHp);
                                 //userDisplay.AppendText(Environment.NewLine);
                                 await Task.Delay(250);
                                 delayPrintLine(userDisplay, "  Str:        " + hero.Str);
@@ -274,7 +270,7 @@ namespace AzilorQuest
                                 delayPrintLine(userDisplay, "  Exp:        " + hero.Exp);
                                 //userDisplay.AppendText(Environment.NewLine);
                                 await Task.Delay(250);
-                                delayPrintLine(userDisplay, "  Next Level: " + hero.TNL);
+                                delayPrintLine(userDisplay, "  Next Level: " + hero.Tnl);
                                 //userDisplay.AppendText(Environment.NewLine);
                             }
                             endBtn.Visible = true;
@@ -295,7 +291,7 @@ namespace AzilorQuest
                     activeAction = false;
                 }
             }
-            currentHP.Text = "HP:  " + hero.HP;
+            currentHP.Text = "Hp:  " + hero.Hp;
             currentExp.Text = "Exp:  " + hero.Exp;
             form1.updateHP();
             form1.updateEXP();
@@ -331,19 +327,19 @@ namespace AzilorQuest
                                 ranGen = rand.Next(99) + 1;
                                 if (ranGen <= 70)
                                 {
-                                    hero.HP = hero.HP - damage;
+                                    hero.Hp = hero.Hp - damage;
                                     delayPrintLine(userDisplay, "The Giant Toad lashes at you with it's tongue for " + damage + "!");
                                     //userDisplay.AppendText(Environment.NewLine);
                                     checkStatusEff();
                                 }
                                 else if (ranGen <= 100)
                                 {
-                                    hero.HP = hero.HP - (damage * 2);
+                                    hero.Hp = hero.Hp - (damage * 2);
                                     delayPrintLine(userDisplay, "The Giant Toad leaps high into the air and crush you from above for " + (damage * 2) + " damage!");
                                     //userDisplay.AppendText(Environment.NewLine);
                                     checkStatusEff();
                                 }
-                                if (hero.HP < 1)
+                                if (hero.Hp < 1)
                                 {
                                     slain();
                                 }
@@ -371,19 +367,19 @@ namespace AzilorQuest
                                 ranGen = rand.Next(99) + 1;
                                 if (ranGen <= 70)
                                 {
-                                    hero.HP = hero.HP - damage;
+                                    hero.Hp = hero.Hp - damage;
                                     delayPrintLine(userDisplay, "The Harpy swipes at you with razor talons for " + damage + "!");
                                     //userDisplay.AppendText(Environment.NewLine);
                                     checkStatusEff();
                                 }
                                 else if (ranGen <= 100)
                                 {
-                                    hero.HP = hero.HP - (damage * 2);
+                                    hero.Hp = hero.Hp - (damage * 2);
                                     delayPrintLine(userDisplay, "The Harpy does a dive bomb at your face for " + (damage * 2) + " damage!");
                                     //userDisplay.AppendText(Environment.NewLine);
                                     checkStatusEff();
                                 }
-                                if (hero.HP < 1)
+                                if (hero.Hp < 1)
                                 {
                                     slain();
                                 }
@@ -408,11 +404,11 @@ namespace AzilorQuest
                             int damage = creature.Str + ranGen / 25 - hero.Con - (hero.Equipment[1].Armor + hero.Equipment[2].Armor + hero.Equipment[3].Armor + hero.Equipment[4].Armor);
                             if (damage > 0)
                             {
-                                hero.HP = hero.HP - damage;
+                                hero.Hp = hero.Hp - damage;
                                 delayPrintLine(userDisplay, "You are hit by a " + monster + " for " + damage + " points of damage");
                                 //userDisplay.AppendText(Environment.NewLine);
                                 checkStatusEff();
-                                if (hero.HP < 1)
+                                if (hero.Hp < 1)
                                 {
                                     slain();
                                 }
@@ -432,7 +428,7 @@ namespace AzilorQuest
                 eventSemaphore.Release();
                 activeAction = false;
             }
-            currentHP.Text = "HP:  " + hero.HP;
+            currentHP.Text = "Hp:  " + hero.Hp;
             currentExp.Text = "Exp:  " + hero.Exp;
             form1.updateHP();
             form1.updateEXP();
@@ -469,8 +465,8 @@ namespace AzilorQuest
         {
             if(hero.StatusEff == "Poisoned")
             {
-                hero.HP -= hero.MaxHP / 20;
-                delayPrintLine(userDisplay, "You take " + (hero.MaxHP / 20).ToString() + " points of damage from poison.");
+                hero.Hp -= hero.MaxHp / 20;
+                delayPrintLine(userDisplay, "You take " + (hero.MaxHp / 20).ToString() + " points of damage from poison.");
                 //userDisplay.AppendText(Environment.NewLine);
                 updateHP();
             }
@@ -488,57 +484,67 @@ namespace AzilorQuest
             switch (item)
             {
                 case "PotionSmall":
-                    Item potion = new Item();
-                    potion.Name = "Potion (Small)";
-                    potion.Type = "Consumable";
-                    potion.Desc = "A small potion that will heal 30 hit points.";
-                    potion.Power = 30;
-                    potion.Armor = -1;
+                    Item potion = new Item
+                    {
+                        Name = "Potion (Small)",
+                        Type = "Consumable",
+                        Desc = "A small potion that will heal 30 hit points.",
+                        Power = 30,
+                        Armor = -1
+                    };
                     hero.Inventory.Add(potion);
                     break;
                 case "PotionMedium":
-                    Item potion1 = new Item();
-                    potion1.Name = "Potion (Medium)";
-                    potion1.Type = "Consumable";
-                    potion1.Desc = "A medium potion that will heal 100 hit points.";
-                    potion1.Power = 100;
-                    potion1.Armor = -1;
+                    Item potion1 = new Item
+                    {
+                        Name = "Potion (Medium)",
+                        Type = "Consumable",
+                        Desc = "A medium potion that will heal 100 hit points.",
+                        Power = 100,
+                        Armor = -1
+                    };
                     hero.Inventory.Add(potion1);
                     break;
                 case "PotionLarge":
-                    Item potion2 = new Item();
-                    potion2.Name = "Potion (Large)";
-                    potion2.Type = "Consumable";
-                    potion2.Desc = "A large potion that will heal 500 hit points.";
-                    potion2.Power = 500;
-                    potion2.Armor = -1;
+                    Item potion2 = new Item
+                    {
+                        Name = "Potion (Large)",
+                        Type = "Consumable",
+                        Desc = "A large potion that will heal 500 hit points.",
+                        Power = 500,
+                        Armor = -1
+                    };
                     hero.Inventory.Add(potion2);
                     break;
                 case "Antidote":
-                    Item antidote = new Item();
-                    antidote.Name = "Antidote";
-                    antidote.Type = "Consumable";
-                    antidote.Desc = "A green herb that when consumed, cures poison.";
-                    antidote.Power = -1;
-                    antidote.Armor = -1;
+                    Item antidote = new Item
+                    {
+                        Name = "Antidote",
+                        Type = "Consumable",
+                        Desc = "A green herb that when consumed, cures poison.",
+                        Power = -1,
+                        Armor = -1
+                    };
                     hero.Inventory.Add(antidote);
                     break;
                 case "Bandage":
-                    Item bandage = new Item();
-                    bandage.Name = "Bandage";
-                    bandage.Type = "Consumable";
-                    bandage.Desc = "A bandage to stop bleeding.";
-                    bandage.Power = -1;
-                    bandage.Armor = -1;
+                    Item bandage = new Item
+                    {
+                        Name = "Bandage",
+                        Type = "Consumable",
+                        Desc = "A bandage to stop bleeding.",
+                        Power = -1,
+                        Armor = -1
+                    };
                     hero.Inventory.Add(bandage);
                     break;
             }
         }
 
-        //PUBLIC UPDATE HP METHOD FOR INVENTORY ITEM USEAGE
+        //PUBLIC UPDATE Hp METHOD FOR INVENTORY ITEM USEAGE
         public void updateHP()
         {
-            currentHP.Text = "HP:  " + hero.HP;
+            currentHP.Text = "Hp:  " + hero.Hp;
         }
 
         private void BattleForm_KeyDown(object sender, KeyEventArgs e)

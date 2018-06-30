@@ -22,3 +22,27 @@ C:\Users\Mitch\source\repos\AzilorQuest\AzilorQuest\obj\Debug\AzilorQuest.Map.re
 C:\Users\Mitch\source\repos\AzilorQuest\AzilorQuest\obj\Debug\AzilorQuest.Quit.resources
 C:\Users\Mitch\source\repos\AzilorQuest\AzilorQuest\obj\Debug\AzilorQuest.Instructions.resources
 C:\Users\Mitch\source\repos\AzilorQuest\AzilorQuest\obj\Debug\AzilorQuest.Welcome.resources
+E:\C# Sample Work\GitHub\Projects\AzilorQuest\AzilorQuest\bin\Debug\MapData1.txt
+E:\C# Sample Work\GitHub\Projects\AzilorQuest\AzilorQuest\bin\Debug\bin\Debug\MapData.txt
+E:\C# Sample Work\GitHub\Projects\AzilorQuest\AzilorQuest\bin\Debug\MapData.txt
+E:\C# Sample Work\GitHub\Projects\AzilorQuest\AzilorQuest\bin\Debug\Oops I Fell In A Dungeon.exe.config
+E:\C# Sample Work\GitHub\Projects\AzilorQuest\AzilorQuest\bin\Debug\Oops I Fell In A Dungeon.exe.manifest
+E:\C# Sample Work\GitHub\Projects\AzilorQuest\AzilorQuest\bin\Debug\Oops I Fell In A Dungeon.application
+E:\C# Sample Work\GitHub\Projects\AzilorQuest\AzilorQuest\bin\Debug\Oops I Fell In A Dungeon.exe
+E:\C# Sample Work\GitHub\Projects\AzilorQuest\AzilorQuest\bin\Debug\Oops I Fell In A Dungeon.pdb
+E:\C# Sample Work\GitHub\Projects\AzilorQuest\AzilorQuest\obj\Debug\AzilorQuest.csprojResolveAssemblyReference.cache
+E:\C# Sample Work\GitHub\Projects\AzilorQuest\AzilorQuest\obj\Debug\Oops I Fell In A Dungeon.g.resources
+E:\C# Sample Work\GitHub\Projects\AzilorQuest\AzilorQuest\obj\Debug\AzilorQuest.BattleForm.resources
+E:\C# Sample Work\GitHub\Projects\AzilorQuest\AzilorQuest\obj\Debug\AzilorQuest.AzQuest.resources
+E:\C# Sample Work\GitHub\Projects\AzilorQuest\AzilorQuest\obj\Debug\AzilorQuest.Instructions.resources
+E:\C# Sample Work\GitHub\Projects\AzilorQuest\AzilorQuest\obj\Debug\AzilorQuest.Inventory.resources
+E:\C# Sample Work\GitHub\Projects\AzilorQuest\AzilorQuest\obj\Debug\AzilorQuest.Map.resources
+E:\C# Sample Work\GitHub\Projects\AzilorQuest\AzilorQuest\obj\Debug\AzilorQuest.Properties.Resources.resources
+E:\C# Sample Work\GitHub\Projects\AzilorQuest\AzilorQuest\obj\Debug\AzilorQuest.Quit.resources
+E:\C# Sample Work\GitHub\Projects\AzilorQuest\AzilorQuest\obj\Debug\AzilorQuest.Welcome.resources
+E:\C# Sample Work\GitHub\Projects\AzilorQuest\AzilorQuest\obj\Debug\AzilorQuest.csproj.GenerateResource.Cache
+E:\C# Sample Work\GitHub\Projects\AzilorQuest\AzilorQuest\obj\Debug\AzilorQuest.csproj.CoreCompileInputs.cache
+E:\C# Sample Work\GitHub\Projects\AzilorQuest\AzilorQuest\obj\Debug\Oops I Fell In A Dungeon.exe.manifest
+E:\C# Sample Work\GitHub\Projects\AzilorQuest\AzilorQuest\obj\Debug\Oops I Fell In A Dungeon.application
+E:\C# Sample Work\GitHub\Projects\AzilorQuest\AzilorQuest\obj\Debug\Oops I Fell In A Dungeon.exe
+E:\C# Sample Work\GitHub\Projects\AzilorQuest\AzilorQuest\obj\Debug\Oops I Fell In A Dungeon.pdb
