@@ -1,4 +1,7 @@
-﻿namespace GameLogicLibrary
+﻿using System.Collections.Generic;
+using System.Resources;
+
+namespace GameLogicLibrary
 {
     public class MapTile
     {
@@ -36,5 +39,32 @@
         public string Exits { get; set; }
         public bool Explored { get; set; }
         public string Description { get; set; }
+
+        //MapTile Methods
+
+        public static void CreateWorld(List<MapTile> world)
+        {
+            int i = 0;
+            string[] objects = Resources.MapData.Split(',');
+            while (i < objects.Length)
+            {
+                MapTile tile = new MapTile
+                {
+                    X = int.Parse(objects[i])
+                };
+                i++;
+                tile.Y = int.Parse(objects[i]);
+                i++;
+                tile.EventId = int.Parse(objects[i]);
+                i++;
+                tile.Section = int.Parse(objects[i]);
+                i++;
+                tile.Exits = objects[i];
+                i++;
+                tile.Description = objects[i];
+                i++;
+                world.Add(tile);
+            }
+        }
     }
 }

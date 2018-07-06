@@ -229,11 +229,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\Data\MapData.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
     <PublishFile Include="MapData.txt">
       <Visible>False</Visible>
       <Group>
@@ -304,6 +299,9 @@
       <Project>{244a530b-971b-4f88-a898-9e538c041db5}</Project>
       <Name>GameLogicLibrary</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\MapData.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

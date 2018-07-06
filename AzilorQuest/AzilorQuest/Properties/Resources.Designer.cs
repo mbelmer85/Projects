@@ -9,6 +9,9 @@
 //------------------------------------------------------------------------------
 
 namespace AzilorQuest.Properties {
+    using System;
+    
+    
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>
@@ -354,26 +357,6 @@ namespace AzilorQuest.Properties {
             get {
                 object obj = ResourceManager.GetObject("MapArrowWest", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 1,1,1,1,East,**Entrance Description**,
-        ///2,1,-1,1,West East,**Default Level 1**,
-        ///3,1,2,1,West South,**Default w/Bend Level 1**,
-        ///3,2,-1,1,North South,**Default Level 1**,
-        ///3,3,3,1,North South,**Default level 1**,
-        ///3,4,-1,1,North East,**Default w/Bend Level 1**,
-        ///4,4,-1,1,West East,**Default Level 1**,
-        ///5,4,4,1,West East,**Default Level 1**,
-        ///6,4,-1,1,North West South,**Default Level 1**,
-        ///6,3,-1,1,North South,**Default Level 1**,
-        ///6,2,-1,1,North South,**Default Level 1**,
-        ///6,1,-1,1,West South,**Default Leve [rest of string was truncated]&quot;;.
-        /// </summary>
-        internal static string MapData {
-            get {
-                return ResourceManager.GetString("MapData", resourceCulture);
             }
         }
         

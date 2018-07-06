@@ -1,0 +1,9 @@
+E:\C# Sample Work\GitHub\Projects\AzilorQuest\GameLogicLibrary\bin\Debug\Resources\Data\MapData.txt
+E:\C# Sample Work\GitHub\Projects\AzilorQuest\GameLogicLibrary\bin\Debug\GameLogicLibrary.dll
+E:\C# Sample Work\GitHub\Projects\AzilorQuest\GameLogicLibrary\bin\Debug\GameLogicLibrary.pdb
+E:\C# Sample Work\GitHub\Projects\AzilorQuest\GameLogicLibrary\obj\Debug\GameLogicLibrary.csprojResolveAssemblyReference.cache
+E:\C# Sample Work\GitHub\Projects\AzilorQuest\GameLogicLibrary\obj\Debug\GameLogicLibrary.Resources.resources
+E:\C# Sample Work\GitHub\Projects\AzilorQuest\GameLogicLibrary\obj\Debug\GameLogicLibrary.csproj.GenerateResource.Cache
+E:\C# Sample Work\GitHub\Projects\AzilorQuest\GameLogicLibrary\obj\Debug\GameLogicLibrary.csproj.CoreCompileInputs.cache
+E:\C# Sample Work\GitHub\Projects\AzilorQuest\GameLogicLibrary\obj\Debug\GameLogicLibrary.dll
+E:\C# Sample Work\GitHub\Projects\AzilorQuest\GameLogicLibrary\obj\Debug\GameLogicLibrary.pdb

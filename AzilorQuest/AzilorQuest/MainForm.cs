@@ -15,80 +15,39 @@ namespace AzilorQuest
             InitializeComponent();
         }
 
-        //GLOBALS
-        private List<MapTile> world;
-        private Hero hero;
-        private Random rand;
+        //IN CLASS GLOBALS
+        private List<MapTile> _world;
+        private Hero _hero;
+        private Random _rand;
 
         //LOAD EVENT
         private void Game_Load(object sender, EventArgs e)
         {
 
-            world = new List<MapTile>();
-            hero = new Hero();
-            rand = new Random();
-            HPLabel.Text = "Hp:  " + hero.Hp;
-            expLabel.Text = "Exp:  " + hero.Exp;
+            _world = new List<MapTile>();
+            _hero = new Hero();
+            _rand = new Random();
+            HPLabel.Text = "Hp:  " + _hero.Hp;
+            expLabel.Text = "Exp:  " + _hero.Exp;
 
 
-            //SECOND ATTEMPT FOR MAPDATA POPULATION
-            //string filePath = @".\mapData.txt";
-            //List<string> lines = File.ReadAllLines(filePath).ToList();
-            //foreach (string line in lines)
-            //{
-            //    string[] entries = line.Split(',');
-            //    MapTile tile = new MapTile(int.Parse(entries[0]), int.Parse(entries[1]), int.Parse(entries[2]), int.Parse(entries[3]), entries[4], entries[5]);
-            //    world.Add(tile);
-            //}
-
-            //FINAL WORKING METHOD FOR MAPDATA POPULATION
-            int i = 0;
-            string[] objects = Resources.MapData.Split(',');
-            while (i < objects.Length)
-            {
-                MapTile tile = new MapTile
-                {
-                    X = int.Parse(objects[i])
-                };
-                i++;
-                tile.Y = int.Parse(objects[i]);
-                i++;
-                tile.EventId = int.Parse(objects[i]);
-                i++;
-                tile.Section = int.Parse(objects[i]);
-                i++;
-                tile.Exits = objects[i];
-                i++;
-                tile.Description = objects[i];
-                i++;
-                world.Add(tile);
-            }
-
-            //FIRST ATTEMPT FOR MAPDATA POPULATION
-            //StreamReader mapData = File.OpenText("MapData.txt");
-            //while (!mapData.EndOfStream)
-            //{
-            //    MapTile tile = new MapTile(int.Parse(mapData.ReadLine()), int.Parse(mapData.ReadLine()), int.Parse(mapData.ReadLine()), int.Parse(mapData.ReadLine()), mapData.ReadLine(), mapData.ReadLine());
-            //    world.Add(tile);
-            //}
-
+            //MAPDATA POPULATION
+            GameLogicLibrary.MapTile.CreateWorld(_world);
             //NEW GAME INVENTORY POPULATION
-            createItem("PotionSmall");
-            createItem("PotionSmall");
-            createItem("Bandage");
-            createItem("Rusty Sword");
-            hero.Inventory[3].Equipped = true;
-            createItem("Leather Armor");
-            hero.Inventory[4].Equipped = true;
-            createItem("Leather Boots");
-            hero.Inventory[5].Equipped = true;
-            //createItem("Steel Longsword");
-            //createItem("Chainmail");
-            createItem("Antidote");
+            CreateItem("PotionSmall");
+            CreateItem("PotionSmall");
+            CreateItem("Bandage");
+            CreateItem("Rusty Sword");
+            _hero.Inventory[3].Equipped = true;
+            CreateItem("Leather Armor");
+            _hero.Inventory[4].Equipped = true;
+            CreateItem("Leather Boots");
+            _hero.Inventory[5].Equipped = true;
+            CreateItem("Antidote");
 
             //UPDATE VIEWED MAPTILES
-            uncoverTile(findTile(hero.X, hero.Y, world[hero.Location].Section));
-            uncoverTile(FindFacingTile(hero.Facing));
+            uncoverTile(findTile(_hero.X, _hero.Y, _world[_hero.Location].Section));
+            uncoverTile(FindFacingTile(_hero.Facing));
 
             //VIEW FIRST ROOM
             Look();
@@ -103,12 +62,12 @@ namespace AzilorQuest
         //DIRECTIONAL BUTTONS (North, South, East, West are actually Forward, Backward, Right, and Left)
         private void northBtn_Click(object sender, EventArgs e)
         {
-            move(hero.Facing);
+            move(_hero.Facing);
         }
 
         private void westBtn_Click_1(object sender, EventArgs e)
         {
-            switch (hero.Facing)
+            switch (_hero.Facing)
             {
                 case "North":
                     move("West");
@@ -127,7 +86,7 @@ namespace AzilorQuest
 
         private void southBtn_Click(object sender, EventArgs e)
         {
-            switch (hero.Facing)
+            switch (_hero.Facing)
             {
                 case "North":
                     move("South");
@@ -146,19 +105,19 @@ namespace AzilorQuest
 
         private void eastBtn_Click(object sender, EventArgs e)
         {
-            if (hero.Facing == "North")
+            if (_hero.Facing == "North")
             {
                 move("East");
             }
-            else if (hero.Facing == "South")
+            else if (_hero.Facing == "South")
             {
                 move("West");
             }
-            else if (hero.Facing == "East")
+            else if (_hero.Facing == "East")
             {
                 move("South");
             }
-            else if (hero.Facing == "West")
+            else if (_hero.Facing == "West")
             {
                 move("North");
             }
@@ -167,43 +126,43 @@ namespace AzilorQuest
         //TURNING
         private void turnLeftBtn_Click_1(object sender, EventArgs e)
         {
-            switch (hero.Facing)
+            switch (_hero.Facing)
             {
                 case "North":
-                    hero.Facing = "West";
+                    _hero.Facing = "West";
                     break;
                 case "West":
-                    hero.Facing = "South";
+                    _hero.Facing = "South";
                     break;
                 case "South":
-                    hero.Facing = "East";
+                    _hero.Facing = "East";
                     break;
                 case "East":
-                    hero.Facing = "North";
+                    _hero.Facing = "North";
                     break;
             }
-            facingLabel.Text = "Facing:  " + hero.Facing;
+            facingLabel.Text = "Facing:  " + _hero.Facing;
             Look();
         }
 
         private void turnRightBtn_Click_1(object sender, EventArgs e)
         {
-            switch (hero.Facing)
+            switch (_hero.Facing)
             {
                 case "North":
-                    hero.Facing = "East";
+                    _hero.Facing = "East";
                     break;
                 case "East":
-                    hero.Facing = "South";
+                    _hero.Facing = "South";
                     break;
                 case "South":
-                    hero.Facing = "West";
+                    _hero.Facing = "West";
                     break;
                 case "West":
-                    hero.Facing = "North";
+                    _hero.Facing = "North";
                     break;
             }
-            facingLabel.Text = $"Facing:  {hero.Facing}";
+            facingLabel.Text = $"Facing:  {_hero.Facing}";
             Look();
         }
 
@@ -213,25 +172,25 @@ namespace AzilorQuest
             userDisplay.Clear();
             userDisplay.AppendText("STATUS:       ");
             userDisplay.AppendText(Environment.NewLine);
-            userDisplay.AppendText(" Level:       " + hero.Level);
+            userDisplay.AppendText(" Level:       " + _hero.Level);
             userDisplay.AppendText(Environment.NewLine);
-            userDisplay.AppendText("  Max Hp:     " + hero.MaxHp);
+            userDisplay.AppendText("  Max Hp:     " + _hero.MaxHp);
             userDisplay.AppendText(Environment.NewLine);
-            userDisplay.AppendText("  Hp:         " + hero.Hp);
+            userDisplay.AppendText("  Hp:         " + _hero.Hp);
             userDisplay.AppendText(Environment.NewLine);
-            userDisplay.AppendText("  Str:        " + hero.Str);
+            userDisplay.AppendText("  Str:        " + _hero.Str);
             userDisplay.AppendText(Environment.NewLine);
-            userDisplay.AppendText("  Dex:        " + hero.Dex);
+            userDisplay.AppendText("  Dex:        " + _hero.Dex);
             userDisplay.AppendText(Environment.NewLine);
-            userDisplay.AppendText("  Con:        " + hero.Con);
+            userDisplay.AppendText("  Con:        " + _hero.Con);
             userDisplay.AppendText(Environment.NewLine);
-            userDisplay.AppendText("  Luk:        " + hero.Luck);
+            userDisplay.AppendText("  Luk:        " + _hero.Luck);
             userDisplay.AppendText(Environment.NewLine);
-            userDisplay.AppendText("  Exp:        " + hero.Exp);
+            userDisplay.AppendText("  Exp:        " + _hero.Exp);
             userDisplay.AppendText(Environment.NewLine);
-            userDisplay.AppendText("  Next Level: " + hero.Tnl);
+            userDisplay.AppendText("  Next Level: " + _hero.Tnl);
             userDisplay.AppendText(Environment.NewLine);
-            userDisplay.AppendText("  Status:     " + hero.StatusEff);
+            userDisplay.AppendText("  Status:     " + _hero.StatusEff);
             userDisplay.AppendText(Environment.NewLine);
         }
 
@@ -246,21 +205,21 @@ namespace AzilorQuest
             userDisplay.Clear();
             userDisplay.AppendText("Currently Equipped:");
             userDisplay.AppendText(Environment.NewLine);
-            userDisplay.AppendText("   WEAPON:  " + hero.Equipment[0].Name);
+            userDisplay.AppendText("   WEAPON:  " + _hero.Equipment[0].Name);
             userDisplay.AppendText(Environment.NewLine);
-            userDisplay.AppendText("   SHIELD:  " + hero.Equipment[1].Name);
+            userDisplay.AppendText("   SHIELD:  " + _hero.Equipment[1].Name);
             userDisplay.AppendText(Environment.NewLine);
-            userDisplay.AppendText("   HELM:    " + hero.Equipment[2].Name);
+            userDisplay.AppendText("   HELM:    " + _hero.Equipment[2].Name);
             userDisplay.AppendText(Environment.NewLine);
-            userDisplay.AppendText("   ARMOR:   " + hero.Equipment[3].Name);
+            userDisplay.AppendText("   ARMOR:   " + _hero.Equipment[3].Name);
             userDisplay.AppendText(Environment.NewLine);
-            userDisplay.AppendText("   BOOTS:   " + hero.Equipment[4].Name);
+            userDisplay.AppendText("   BOOTS:   " + _hero.Equipment[4].Name);
             userDisplay.AppendText(Environment.NewLine);
         }
 
         private void restBtn_Click(object sender, EventArgs e)
         {
-            if (hero.StatusEff == "Healthy")
+            if (_hero.StatusEff == "Healthy")
             {
                 userDisplay.Clear();
                 if (ChanceEncounter())
@@ -270,24 +229,24 @@ namespace AzilorQuest
                 }
                 else
                 {
-                    hero.Hp = hero.MaxHp;
+                    _hero.Hp = _hero.MaxHp;
                     userDisplay.AppendText("You manage to get some rest.");
                     userDisplay.AppendText(Environment.NewLine);
                 }
             }
-            else if (hero.StatusEff == "Dead")
+            else if (_hero.StatusEff == "Dead")
             {
                 userDisplay.AppendText("You are magically revived... somehow...");
                 userDisplay.AppendText(Environment.NewLine);
-                hero.Hp = hero.MaxHp;
-                hero.StatusEff = "Healthy";
+                _hero.Hp = _hero.MaxHp;
+                _hero.StatusEff = "Healthy";
             }
             else
             {
-                userDisplay.AppendText("You are " + hero.StatusEff + " and cannot rest.");
+                userDisplay.AppendText("You are " + _hero.StatusEff + " and cannot rest.");
                 userDisplay.AppendText(Environment.NewLine);
             }
-            HPLabel.Text = "Hp:  " + hero.Hp;
+            HPLabel.Text = "Hp:  " + _hero.Hp;
         }
 
         private void quitBtn_Click(object sender, EventArgs e)
@@ -298,20 +257,20 @@ namespace AzilorQuest
 
         private void invBtn_Click(object sender, EventArgs e)
         {
-            InventoryForm inv = new InventoryForm(hero, this);
+            InventoryForm inv = new InventoryForm(_hero, this);
             inv.ShowDialog();
         }
 
         private void mapBtn_Click_1(object sender, EventArgs e)
         {
-            MapForm map = new MapForm(world, hero);
+            MapForm map = new MapForm(_world, _hero);
             map.ShowDialog();
         }
 
         //DEBUG INSTANT LEVEL UP BUTTON
         private void button1_Click(object sender, EventArgs e)
         {
-            hero.LevelUp();
+            _hero.LevelUp();
         }
 
         //CUSTOM METHODS
@@ -320,12 +279,12 @@ namespace AzilorQuest
             switch (direction)
             {
                 case "East":
-                    for (int i = 0; i < world.Count; i++)
+                    for (int i = 0; i < _world.Count; i++)
                     {
-                        if (world[i].X == hero.X + 1 && world[i].Y == hero.Y && world[i].Section == world[hero.Location].Section && world[i].Exits.Contains("West"))
+                        if (_world[i].X == _hero.X + 1 && _world[i].Y == _hero.Y && _world[i].Section == _world[_hero.Location].Section && _world[i].Exits.Contains("West"))
                         {
-                            hero.X = world[i].X;
-                            hero.Location = i;
+                            _hero.X = _world[i].X;
+                            _hero.Location = i;
                             //Check for event
                             //Run event if found
                             Look();
@@ -337,12 +296,12 @@ namespace AzilorQuest
                     Bump();
                     break;
                 case "South":
-                    for (int i = 0; i < world.Count; i++)
+                    for (int i = 0; i < _world.Count; i++)
                     {
-                        if (world[i].X == hero.X && world[i].Y == hero.Y + 1 && world[i].Section == world[hero.Location].Section && world[i].Exits.Contains("North"))
+                        if (_world[i].X == _hero.X && _world[i].Y == _hero.Y + 1 && _world[i].Section == _world[_hero.Location].Section && _world[i].Exits.Contains("North"))
                         {
-                            hero.Y = world[i].Y;
-                            hero.Location = i;
+                            _hero.Y = _world[i].Y;
+                            _hero.Location = i;
                             //Check for event
                             //Run event if found
                             Look();
@@ -354,12 +313,12 @@ namespace AzilorQuest
                     Bump();
                     break;
                 case "West":
-                    for (int i = 0; i < world.Count; i++)
+                    for (int i = 0; i < _world.Count; i++)
                     {
-                        if (world[i].X == hero.X - 1 && world[i].Y == hero.Y && world[i].Section == world[hero.Location].Section && world[i].Exits.Contains("East"))
+                        if (_world[i].X == _hero.X - 1 && _world[i].Y == _hero.Y && _world[i].Section == _world[_hero.Location].Section && _world[i].Exits.Contains("East"))
                         {
-                            hero.X = world[i].X;
-                            hero.Location = i;
+                            _hero.X = _world[i].X;
+                            _hero.Location = i;
                             //Check for event
                             //Run event if found
                             applyStatusDamage();
@@ -371,12 +330,12 @@ namespace AzilorQuest
                     Bump();
                     break;
                 case "North":
-                    for (int i = 0; i < world.Count; i++)
+                    for (int i = 0; i < _world.Count; i++)
                     {
-                        if (world[i].X == hero.X && world[i].Y == hero.Y - 1 && world[i].Section == world[hero.Location].Section && world[i].Exits.Contains("South"))
+                        if (_world[i].X == _hero.X && _world[i].Y == _hero.Y - 1 && _world[i].Section == _world[_hero.Location].Section && _world[i].Exits.Contains("South"))
                         {
-                            hero.Y = world[i].Y;
-                            hero.Location = i;
+                            _hero.Y = _world[i].Y;
+                            _hero.Location = i;
                             //Check for event
                             //Run event if found
                             Look();
@@ -394,22 +353,22 @@ namespace AzilorQuest
         private void Look()
         {
             userDisplay.Clear();
-            for (int i = 0; i < world.Count; i++)
+            for (int i = 0; i < _world.Count; i++)
             {
-                if (world[i].X == hero.X && world[i].Y == hero.Y && world[i].Section == world[hero.Location].Section)
+                if (_world[i].X == _hero.X && _world[i].Y == _hero.Y && _world[i].Section == _world[_hero.Location].Section)
                 {
-                    userDisplay.AppendText("Current X,Y: " + hero.X + "," + hero.Y);
+                    userDisplay.AppendText("Current X,Y: " + _hero.X + "," + _hero.Y);
                     userDisplay.AppendText(Environment.NewLine);
-                    //outputDisplay.Items.Add("Event: " + world[i].EventId);
-                    //outputDisplay.Items.Add("Dungeon Section: " + world[i].Section);
-                    //outputDisplay.Items.Add("Current Exits: " + world[i].Exits);
-                    userDisplay.AppendText(world[i].Description);
+                    //outputDisplay.Items.Add("Event: " + _world[i].EventId);
+                    //outputDisplay.Items.Add("Dungeon Section: " + _world[i].Section);
+                    //outputDisplay.Items.Add("Current Exits: " + _world[i].Exits);
+                    userDisplay.AppendText(_world[i].Description);
                     userDisplay.AppendText(Environment.NewLine);
                 }
             }
-            HPLabel.Text = "Hp:  " + hero.Hp;
-            expLabel.Text = "Exp:  " + hero.Exp;
-            uncoverTile(findTile(hero.X, hero.Y, world[hero.Location].Section));
+            HPLabel.Text = "Hp:  " + _hero.Hp;
+            expLabel.Text = "Exp:  " + _hero.Exp;
+            uncoverTile(findTile(_hero.X, _hero.Y, _world[_hero.Location].Section));
             uncoverTile(FindFacingTile("East"));
             uncoverTile(FindFacingTile("North"));
             uncoverTile(FindFacingTile("South"));
@@ -420,16 +379,16 @@ namespace AzilorQuest
         //CHECK FOR A STATUS EFFECT AND APPLY EFFECT
         private void applyStatusDamage()
         {
-            if (hero.StatusEff == "Poisoned")
+            if (_hero.StatusEff == "Poisoned")
             {
-                hero.Hp -= hero.MaxHp / 20;
-                userDisplay.AppendText("You take " + (hero.MaxHp / 20).ToString() + " points of damage from poison.");
+                _hero.Hp -= _hero.MaxHp / 20;
+                userDisplay.AppendText("You take " + (_hero.MaxHp / 20).ToString() + " points of damage from poison.");
                 userDisplay.AppendText(Environment.NewLine);
-                if (hero.Hp < 1)
+                if (_hero.Hp < 1)
                 {
                     userDisplay.AppendText("You have succumed to the poison.");
                     userDisplay.AppendText(Environment.NewLine);
-                    hero.StatusEff = "Dead";
+                    _hero.StatusEff = "Dead";
                 }
             }
         }
@@ -444,14 +403,14 @@ namespace AzilorQuest
         //RETURN TILE FOUND AT COORDINATES X,Y AND FLOOR
         private MapTile findTile(int x, int y, int section)
         {
-            for (int i = 0; i < world.Count; i++)
+            for (int i = 0; i < _world.Count; i++)
             {
-                if (world[i].X == x && world[i].Y == y && world[i].Section == section)
+                if (_world[i].X == x && _world[i].Y == y && _world[i].Section == section)
                 {
-                    return world[i];
+                    return _world[i];
                 }
             }
-            return world[hero.Location];
+            return _world[_hero.Location];
         }
 
         //RETURN TILE IN FRONT OF PLAYER
@@ -460,43 +419,43 @@ namespace AzilorQuest
             switch (direction)
             {
                 case "North":
-                    for (int i = 0; i < world.Count; i++)
+                    for (int i = 0; i < _world.Count; i++)
                     {
-                        if (world[i].X == hero.X && world[i].Y == hero.Y - 1 && world[i].Section == world[hero.Location].Section && world[hero.Location].Exits.Contains("North"))
+                        if (_world[i].X == _hero.X && _world[i].Y == _hero.Y - 1 && _world[i].Section == _world[_hero.Location].Section && _world[_hero.Location].Exits.Contains("North"))
                         {
-                            return world[i];
+                            return _world[i];
                         }
                     }
-                    return world[hero.Location];
+                    return _world[_hero.Location];
                 case "East":
-                    for (int i = 0; i < world.Count; i++)
+                    for (int i = 0; i < _world.Count; i++)
                     {
-                        if (world[i].X == hero.X + 1 && world[i].Y == hero.Y && world[i].Section == world[hero.Location].Section && world[hero.Location].Exits.Contains("East"))
+                        if (_world[i].X == _hero.X + 1 && _world[i].Y == _hero.Y && _world[i].Section == _world[_hero.Location].Section && _world[_hero.Location].Exits.Contains("East"))
                         {
-                            return world[i];
+                            return _world[i];
                         }
                     }
-                    return world[hero.Location];
+                    return _world[_hero.Location];
                 case "South":
-                    for (int i = 0; i < world.Count; i++)
+                    for (int i = 0; i < _world.Count; i++)
                     {
-                        if (world[i].X == hero.X && world[i].Y == hero.Y + 1 && world[i].Section == world[hero.Location].Section && world[hero.Location].Exits.Contains("South"))
+                        if (_world[i].X == _hero.X && _world[i].Y == _hero.Y + 1 && _world[i].Section == _world[_hero.Location].Section && _world[_hero.Location].Exits.Contains("South"))
                         {
-                            return world[i];
+                            return _world[i];
                         }
                     }
-                    return world[hero.Location];
+                    return _world[_hero.Location];
                 case "West":
-                    for (int i = 0; i < world.Count; i++)
+                    for (int i = 0; i < _world.Count; i++)
                     {
-                        if (world[i].X == hero.X - 1 && world[i].Y == hero.Y && world[i].Section == world[hero.Location].Section && world[hero.Location].Exits.Contains("West"))
+                        if (_world[i].X == _hero.X - 1 && _world[i].Y == _hero.Y && _world[i].Section == _world[_hero.Location].Section && _world[_hero.Location].Exits.Contains("West"))
                         {
-                            return world[i];
+                            return _world[i];
                         }
                     }
-                    return world[hero.Location];
+                    return _world[_hero.Location];
                 default:
-                    return world[hero.Location];
+                    return _world[_hero.Location];
             }
         }
         
@@ -516,12 +475,12 @@ namespace AzilorQuest
         {
             string mobChoice = "";
             //Generate random number
-            int ranGen = rand.Next(99) + 1;
+            int ranGen = _rand.Next(99) + 1;
             //20% Chance for battle
-            if (ranGen <= 20 && world[hero.Location].EventId <= 0)
+            if (ranGen <= 20 && _world[_hero.Location].EventId <= 0)
             {
-                ranGen = rand.Next(99) + 1;
-                switch (world[hero.Location].Section)
+                ranGen = _rand.Next(99) + 1;
+                switch (_world[_hero.Location].Section)
                 {
                     case 1:
                         if (ranGen <= 60)
@@ -581,7 +540,7 @@ namespace AzilorQuest
                         break;
                 }
                 //Run battle
-                BattleForm battle = new BattleForm(mobChoice, hero, world, this);
+                BattleForm battle = new BattleForm(mobChoice, _hero, _world, this);
                 battle.ShowDialog();
                 return true;
             }
@@ -592,16 +551,16 @@ namespace AzilorQuest
         //ALL EVENTS
         async private void eventCheck()
         {
-            switch (world[hero.Location].EventId)
+            switch (_world[_hero.Location].EventId)
             {
                 case 9:
                     //Fight Boss Floor 1
-                    BattleForm battle = new BattleForm("Giant Toad", hero, world, this);
+                    BattleForm battle = new BattleForm("Giant Toad", _hero, _world, this);
                     battle.ShowDialog();
                     break;
                 case 26:
                     //Fight Boss Floor 2
-                    BattleForm battle1 = new BattleForm("Harpy", hero, world, this);
+                    BattleForm battle1 = new BattleForm("Harpy", _hero, _world, this);
                     battle1.ShowDialog();
                     break;
                 case 5:
@@ -610,8 +569,8 @@ namespace AzilorQuest
                     userDisplay.AppendText(Environment.NewLine);
                     userDisplay.AppendText("You obtain the Leather Buckler.");
                     userDisplay.AppendText(Environment.NewLine);
-                    createItem("Leather Buckler");
-                    world[hero.Location].EventId = -1;
+                    CreateItem("Leather Buckler");
+                    _world[_hero.Location].EventId = -1;
                     break;
                 case 3:
                     //Potion and Antidote in Skeleton
@@ -623,9 +582,9 @@ namespace AzilorQuest
                     userDisplay.AppendText(Environment.NewLine);
                     userDisplay.AppendText("You obtain the antidote.");
                     userDisplay.AppendText(Environment.NewLine);
-                    createItem("PotionSmall");
-                    createItem("Antidote");
-                    world[hero.Location].EventId = -1;
+                    CreateItem("PotionSmall");
+                    CreateItem("Antidote");
+                    _world[_hero.Location].EventId = -1;
                     break;
                 case 7:
                     //Potion Chest Small
@@ -633,8 +592,8 @@ namespace AzilorQuest
                     userDisplay.AppendText(Environment.NewLine);
                     userDisplay.AppendText("You obtain the small potion.");
                     userDisplay.AppendText(Environment.NewLine);
-                    createItem("PotionSmall");
-                    world[hero.Location].EventId = -1;
+                    CreateItem("PotionSmall");
+                    _world[_hero.Location].EventId = -1;
                     break;
                 case 8:
                     //Potion and Antidote Chest
@@ -644,9 +603,9 @@ namespace AzilorQuest
                     userDisplay.AppendText(Environment.NewLine);
                     userDisplay.AppendText("You obtain the antidote.");
                     userDisplay.AppendText(Environment.NewLine);
-                    createItem("PotionSmall");
-                    createItem("Antidote");
-                    world[hero.Location].EventId = -1;
+                    CreateItem("PotionSmall");
+                    CreateItem("Antidote");
+                    _world[_hero.Location].EventId = -1;
                     break;
                 case 20:
                     //Potion Chest Medium
@@ -654,8 +613,8 @@ namespace AzilorQuest
                     userDisplay.AppendText(Environment.NewLine);
                     userDisplay.AppendText("You obtain the medium potion.");
                     userDisplay.AppendText(Environment.NewLine);
-                    createItem("PotionMedium");
-                    world[hero.Location].EventId = -1;
+                    CreateItem("PotionMedium");
+                    _world[_hero.Location].EventId = -1;
                     break;
                 case 21:
                     //Chainmail in Sarcophagas
@@ -663,8 +622,8 @@ namespace AzilorQuest
                     userDisplay.AppendText(Environment.NewLine);
                     userDisplay.AppendText("You obtain the Chainmail.");
                     userDisplay.AppendText(Environment.NewLine);
-                    createItem("Chainmail");
-                    world[hero.Location].EventId = -1;
+                    CreateItem("Chainmail");
+                    _world[_hero.Location].EventId = -1;
                     break;
                 case 22:
                     //Chain Coif in chest
@@ -672,8 +631,8 @@ namespace AzilorQuest
                     userDisplay.AppendText(Environment.NewLine);
                     userDisplay.AppendText("You obtain the Chain Coif.");
                     userDisplay.AppendText(Environment.NewLine);
-                    createItem("Chain Coif");
-                    world[hero.Location].EventId = -1;
+                    CreateItem("Chain Coif");
+                    _world[_hero.Location].EventId = -1;
                     break;
                 case 23:
                     //Solletrets in chest
@@ -681,8 +640,8 @@ namespace AzilorQuest
                     userDisplay.AppendText(Environment.NewLine);
                     userDisplay.AppendText("You obtain the Sollerets.");
                     userDisplay.AppendText(Environment.NewLine);
-                    createItem("Sollerets");
-                    world[hero.Location].EventId = -1;
+                    CreateItem("Sollerets");
+                    _world[_hero.Location].EventId = -1;
                     break;
                 case 24:
                     //Targe on fresh corpse
@@ -690,8 +649,8 @@ namespace AzilorQuest
                     userDisplay.AppendText(Environment.NewLine);
                     userDisplay.AppendText("You remove the Targe.");
                     userDisplay.AppendText(Environment.NewLine);
-                    createItem("Targe");
-                    world[hero.Location].EventId = -1;
+                    CreateItem("Targe");
+                    _world[_hero.Location].EventId = -1;
                     break;
                 case 25:
                     //Dirk on Pedestal
@@ -699,8 +658,8 @@ namespace AzilorQuest
                     userDisplay.AppendText(Environment.NewLine);
                     userDisplay.AppendText("You obtain the Dirk.");
                     userDisplay.AppendText(Environment.NewLine);
-                    createItem("Dirk");
-                    world[hero.Location].EventId = -1;
+                    CreateItem("Dirk");
+                    _world[_hero.Location].EventId = -1;
                     break;
                 case 11:
                     //Poison Gas Room
@@ -708,7 +667,7 @@ namespace AzilorQuest
                     userDisplay.AppendText(Environment.NewLine);
                     userDisplay.AppendText("You take damage!");
                     userDisplay.AppendText(Environment.NewLine);
-                    hero.Hp -= 5;
+                    _hero.Hp -= 5;
                     ChanceEncounter();
                     break;
                 case 10:
@@ -716,13 +675,13 @@ namespace AzilorQuest
                     userDisplay.AppendText("You walk down the cold stone steps...");
                     userDisplay.AppendText(Environment.NewLine);
                     await Task.Delay(1000);
-                    for(int i = 0; i < world.Count; i++)
+                    for(int i = 0; i < _world.Count; i++)
                     {
-                        if(world[i].X == 9 && world[i].Y == 19 && world[i].Section == 2)
+                        if(_world[i].X == 9 && _world[i].Y == 19 && _world[i].Section == 2)
                         {
-                            hero.Location = i;
-                            hero.X = world[i].X;
-                            hero.Y = world[i].Y;
+                            _hero.Location = i;
+                            _hero.X = _world[i].X;
+                            _hero.Y = _world[i].Y;
                             Look();
                             userDisplay.AppendText("You feel the door behind you shut and lock as you enter.");
                             userDisplay.AppendText(Environment.NewLine);
@@ -734,13 +693,13 @@ namespace AzilorQuest
                     userDisplay.AppendText("An odd sensation grabs you as your are teleported!!");
                     userDisplay.AppendText(Environment.NewLine);
                     await Task.Delay(1000);
-                    for (int i = 0; i < world.Count; i++)
+                    for (int i = 0; i < _world.Count; i++)
                     {
-                        if (world[i].X == 9 && world[i].Y == 19 && world[i].Section == 2)
+                        if (_world[i].X == 9 && _world[i].Y == 19 && _world[i].Section == 2)
                         {
-                            hero.Location = i;
-                            hero.X = world[i].X;
-                            hero.Y = world[i].Y;
+                            _hero.Location = i;
+                            _hero.X = _world[i].X;
+                            _hero.Y = _world[i].Y;
                             userDisplay.AppendText("You feel as though you've been here before...");
                             userDisplay.AppendText(Environment.NewLine);
                         }
@@ -758,7 +717,7 @@ namespace AzilorQuest
 
         //ITEM CREATORS
 
-        public void createItem(string item)
+        public void CreateItem(string item)
         {
             switch (item)
             {
@@ -771,7 +730,7 @@ namespace AzilorQuest
                         Power = 30,
                         Armor = -1
                     };
-                    hero.Inventory.Add(potion);
+                    _hero.Inventory.Add(potion);
                     break;
                 case "PotionMedium":
                     Item potion1 = new Item
@@ -782,7 +741,7 @@ namespace AzilorQuest
                         Power = 100,
                         Armor = -1
                     };
-                    hero.Inventory.Add(potion1);
+                    _hero.Inventory.Add(potion1);
                     break;
                 case "PotionLarge":
                     Item potion2 = new Item
@@ -793,7 +752,7 @@ namespace AzilorQuest
                         Power = 500,
                         Armor = -1
                     };
-                    hero.Inventory.Add(potion2);
+                    _hero.Inventory.Add(potion2);
                     break;
                 case "Antidote":
                     Item antidote = new Item
@@ -804,7 +763,7 @@ namespace AzilorQuest
                         Power = -1,
                         Armor = -1
                     };
-                    hero.Inventory.Add(antidote);
+                    _hero.Inventory.Add(antidote);
                     break;
                 case "Bandage":
                     Item bandage = new Item
@@ -815,7 +774,7 @@ namespace AzilorQuest
                         Power = -1,
                         Armor = -1
                     };
-                    hero.Inventory.Add(bandage);
+                    _hero.Inventory.Add(bandage);
                     break;
                 case "Rusty Sword":
                     Item sword = new Item
@@ -826,7 +785,7 @@ namespace AzilorQuest
                         Power = 2,
                         Armor = -1
                     };
-                    hero.Inventory.Add(sword);
+                    _hero.Inventory.Add(sword);
                     break;
                 case "Leather Armor":
                     Item armor = new Item
@@ -837,7 +796,7 @@ namespace AzilorQuest
                         Power = -1,
                         Armor = 3
                     };
-                    hero.Inventory.Add(armor);
+                    _hero.Inventory.Add(armor);
                     break;
                 case "Leather Boots":
                     Item boots = new Item
@@ -848,7 +807,7 @@ namespace AzilorQuest
                         Power = -1,
                         Armor = 1
                     };
-                    hero.Inventory.Add(boots);
+                    _hero.Inventory.Add(boots);
                     break;
                 case "Leather Buckler":
                     Item shield = new Item
@@ -859,7 +818,7 @@ namespace AzilorQuest
                         Power = -1,
                         Armor = 2
                     };
-                    hero.Inventory.Add(shield);
+                    _hero.Inventory.Add(shield);
                     break;
                 case "Dirk":
                     Item dagger = new Item
@@ -870,7 +829,7 @@ namespace AzilorQuest
                         Power = 10,
                         Armor = -1
                     };
-                    hero.Inventory.Add(dagger);
+                    _hero.Inventory.Add(dagger);
                     break;
                 case "Chainmail":
                     Item armor2 = new Item
@@ -881,7 +840,7 @@ namespace AzilorQuest
                         Power = -1,
                         Armor = 5
                     };
-                    hero.Inventory.Add(armor2);
+                    _hero.Inventory.Add(armor2);
                     break;
                 case "Sollerets":
                     Item boots2 = new Item
@@ -892,7 +851,7 @@ namespace AzilorQuest
                         Power = -1,
                         Armor = 2
                     };
-                    hero.Inventory.Add(boots2);
+                    _hero.Inventory.Add(boots2);
                     break;
                 case "Targe":
                     Item shield2 = new Item
@@ -903,7 +862,7 @@ namespace AzilorQuest
                         Power = -1,
                         Armor = 4
                     };
-                    hero.Inventory.Add(shield2);
+                    _hero.Inventory.Add(shield2);
                     break;
                 case "Steel Longsword":
                     Item sword2 = new Item
@@ -914,7 +873,7 @@ namespace AzilorQuest
                         Power = 10,
                         Armor = -1
                     };
-                    hero.Inventory.Add(sword2);
+                    _hero.Inventory.Add(sword2);
                     break;
                 case "Platemail":
                     Item armor3 = new Item
@@ -925,7 +884,7 @@ namespace AzilorQuest
                         Power = -1,
                         Armor = 15
                     };
-                    hero.Inventory.Add(armor3);
+                    _hero.Inventory.Add(armor3);
                     break;
                 case "Sabatons":
                     Item boots3 = new Item
@@ -936,7 +895,7 @@ namespace AzilorQuest
                         Power = -1,
                         Armor = 5
                     };
-                    hero.Inventory.Add(boots3);
+                    _hero.Inventory.Add(boots3);
                     break;
                 case "Kite Shield":
                     Item shield3 = new Item
@@ -947,7 +906,7 @@ namespace AzilorQuest
                         Power = -1,
                         Armor = 7
                     };
-                    hero.Inventory.Add(shield3);
+                    _hero.Inventory.Add(shield3);
                     break;
                 case "Chain Coif":
                     Item coif = new Item
@@ -958,7 +917,7 @@ namespace AzilorQuest
                         Power = -1,
                         Armor = 2
                     };
-                    hero.Inventory.Add(coif);
+                    _hero.Inventory.Add(coif);
                     break;
                 case "Barbute":
                     Item barbute = new Item
@@ -969,7 +928,7 @@ namespace AzilorQuest
                         Power = -1,
                         Armor = 5
                     };
-                    hero.Inventory.Add(barbute);
+                    _hero.Inventory.Add(barbute);
                     break;
             }
         }
@@ -977,20 +936,20 @@ namespace AzilorQuest
         //UPDATE UI TEXT
         public void updateHP()
         {
-            HPLabel.Text = "Hp:  " + hero.Hp;
+            HPLabel.Text = "Hp:  " + _hero.Hp;
         }
 
         public void updateEXP()
         {
-            expLabel.Text = "Exp:  " + hero.Exp;
+            expLabel.Text = "Exp:  " + _hero.Exp;
         }
 
         //CHECK IF TILE EXISTS
         private bool tileExists(int x, int y, int section)
         {
-            for(int i = 0; i < world.Count; i++)
+            for(int i = 0; i < _world.Count; i++)
             {
-                if(world[i].X == x && world[i].Y == y && world[i].Section == section)
+                if(_world[i].X == x && _world[i].Y == y && _world[i].Section == section)
                 {
                     return true;
                 }
@@ -1085,11 +1044,11 @@ namespace AzilorQuest
         private void miniMapUpdate()
         {
             bool found = false;
-            for(int i = 0; i < world.Count; i++)
+            for(int i = 0; i < _world.Count; i++)
             {
-                if(world[i].X == hero.X + 1 && world[i].Y == hero.Y && world[i].Section == world[hero.Location].Section && world[i].Explored)
+                if(_world[i].X == _hero.X + 1 && _world[i].Y == _hero.Y && _world[i].Section == _world[_hero.Location].Section && _world[i].Explored)
                 {
-                    p1n0.BackgroundImage = getMapImage(world[i]);
+                    p1n0.BackgroundImage = getMapImage(_world[i]);
                     found = true;
                 }
             }
@@ -1098,11 +1057,11 @@ namespace AzilorQuest
                 p1n0.BackgroundImage = Resources.noTile;
             }
             found = false;
-            for (int i = 0; i < world.Count; i++)
+            for (int i = 0; i < _world.Count; i++)
             {
-                if (world[i].X == hero.X + 2 && world[i].Y == hero.Y && world[i].Section == world[hero.Location].Section && world[i].Explored)
+                if (_world[i].X == _hero.X + 2 && _world[i].Y == _hero.Y && _world[i].Section == _world[_hero.Location].Section && _world[i].Explored)
                 {
-                    p2n0.BackgroundImage = getMapImage(world[i]);
+                    p2n0.BackgroundImage = getMapImage(_world[i]);
                     found = true;
                 }
             }
@@ -1111,11 +1070,11 @@ namespace AzilorQuest
                 p2n0.BackgroundImage = Resources.noTile;
             }
             found = false;
-            for (int i = 0; i < world.Count; i++)
+            for (int i = 0; i < _world.Count; i++)
             {
-                if (world[i].X == hero.X - 1 && world[i].Y == hero.Y && world[i].Section == world[hero.Location].Section && world[i].Explored)
+                if (_world[i].X == _hero.X - 1 && _world[i].Y == _hero.Y && _world[i].Section == _world[_hero.Location].Section && _world[i].Explored)
                 {
-                    n1n0.BackgroundImage = getMapImage(world[i]);
+                    n1n0.BackgroundImage = getMapImage(_world[i]);
                     found = true;
                 }
             }
@@ -1124,11 +1083,11 @@ namespace AzilorQuest
                 n1n0.BackgroundImage = Resources.noTile;
             }
             found = false;
-            for (int i = 0; i < world.Count; i++)
+            for (int i = 0; i < _world.Count; i++)
             {
-                if (world[i].X == hero.X - 2 && world[i].Y == hero.Y && world[i].Section == world[hero.Location].Section && world[i].Explored)
+                if (_world[i].X == _hero.X - 2 && _world[i].Y == _hero.Y && _world[i].Section == _world[_hero.Location].Section && _world[i].Explored)
                 {
-                    n2n0.BackgroundImage = getMapImage(world[i]);
+                    n2n0.BackgroundImage = getMapImage(_world[i]);
                     found = true;
                 }
             }
@@ -1137,11 +1096,11 @@ namespace AzilorQuest
                 n2n0.BackgroundImage = Resources.noTile;
             }
             found = false;
-            for (int i = 0; i < world.Count; i++)
+            for (int i = 0; i < _world.Count; i++)
             {
-                if (world[i].X == hero.X - 2 && world[i].Y == hero.Y - 2 && world[i].Section == world[hero.Location].Section && world[i].Explored)
+                if (_world[i].X == _hero.X - 2 && _world[i].Y == _hero.Y - 2 && _world[i].Section == _world[_hero.Location].Section && _world[i].Explored)
                 {
-                    n2n2.BackgroundImage = getMapImage(world[i]);
+                    n2n2.BackgroundImage = getMapImage(_world[i]);
                     found = true;
                 }
             }
@@ -1150,11 +1109,11 @@ namespace AzilorQuest
                 n2n2.BackgroundImage = Resources.noTile;
             }
             found = false;
-            for (int i = 0; i < world.Count; i++)
+            for (int i = 0; i < _world.Count; i++)
             {
-                if (world[i].X == hero.X - 1 && world[i].Y == hero.Y - 2 && world[i].Section == world[hero.Location].Section && world[i].Explored)
+                if (_world[i].X == _hero.X - 1 && _world[i].Y == _hero.Y - 2 && _world[i].Section == _world[_hero.Location].Section && _world[i].Explored)
                 {
-                    n1n2.BackgroundImage = getMapImage(world[i]);
+                    n1n2.BackgroundImage = getMapImage(_world[i]);
                     found = true;
                 }
             }
@@ -1163,11 +1122,11 @@ namespace AzilorQuest
                 n1n2.BackgroundImage = Resources.noTile;
             }
             found = false;
-            for (int i = 0; i < world.Count; i++)
+            for (int i = 0; i < _world.Count; i++)
             {
-                if (world[i].X == hero.X && world[i].Y == hero.Y - 2 && world[i].Section == world[hero.Location].Section && world[i].Explored)
+                if (_world[i].X == _hero.X && _world[i].Y == _hero.Y - 2 && _world[i].Section == _world[_hero.Location].Section && _world[i].Explored)
                 {
-                    n0n2.BackgroundImage = getMapImage(world[i]);
+                    n0n2.BackgroundImage = getMapImage(_world[i]);
                     found = true;
                 }
             }
@@ -1176,11 +1135,11 @@ namespace AzilorQuest
                 n0n2.BackgroundImage = Resources.noTile;
             }
             found = false;
-            for (int i = 0; i < world.Count; i++)
+            for (int i = 0; i < _world.Count; i++)
             {
-                if (world[i].X == hero.X + 1 && world[i].Y == hero.Y - 2 && world[i].Section == world[hero.Location].Section && world[i].Explored)
+                if (_world[i].X == _hero.X + 1 && _world[i].Y == _hero.Y - 2 && _world[i].Section == _world[_hero.Location].Section && _world[i].Explored)
                 {
-                    p1n2.BackgroundImage = getMapImage(world[i]);
+                    p1n2.BackgroundImage = getMapImage(_world[i]);
                     found = true;
                 }
             }
@@ -1189,11 +1148,11 @@ namespace AzilorQuest
                 p1n2.BackgroundImage = Resources.noTile;
             }
             found = false;
-            for (int i = 0; i < world.Count; i++)
+            for (int i = 0; i < _world.Count; i++)
             {
-                if (world[i].X == hero.X + 2 && world[i].Y == hero.Y - 2 && world[i].Section == world[hero.Location].Section && world[i].Explored)
+                if (_world[i].X == _hero.X + 2 && _world[i].Y == _hero.Y - 2 && _world[i].Section == _world[_hero.Location].Section && _world[i].Explored)
                 {
-                    p2n2.BackgroundImage = getMapImage(world[i]);
+                    p2n2.BackgroundImage = getMapImage(_world[i]);
                     found = true;
                 }
             }
@@ -1202,11 +1161,11 @@ namespace AzilorQuest
                 p2n2.BackgroundImage = Resources.noTile;
             }
             found = false;
-            for (int i = 0; i < world.Count; i++)
+            for (int i = 0; i < _world.Count; i++)
             {
-                if (world[i].X == hero.X - 2 && world[i].Y == hero.Y - 1 && world[i].Section == world[hero.Location].Section && world[i].Explored)
+                if (_world[i].X == _hero.X - 2 && _world[i].Y == _hero.Y - 1 && _world[i].Section == _world[_hero.Location].Section && _world[i].Explored)
                 {
-                    n2n1.BackgroundImage = getMapImage(world[i]);
+                    n2n1.BackgroundImage = getMapImage(_world[i]);
                     found = true;
                 }
             }
@@ -1215,11 +1174,11 @@ namespace AzilorQuest
                 n2n1.BackgroundImage = Resources.noTile;
             }
             found = false;
-            for (int i = 0; i < world.Count; i++)
+            for (int i = 0; i < _world.Count; i++)
             {
-                if (world[i].X == hero.X - 1 && world[i].Y == hero.Y - 1 && world[i].Section == world[hero.Location].Section && world[i].Explored)
+                if (_world[i].X == _hero.X - 1 && _world[i].Y == _hero.Y - 1 && _world[i].Section == _world[_hero.Location].Section && _world[i].Explored)
                 {
-                    n1n1.BackgroundImage = getMapImage(world[i]);
+                    n1n1.BackgroundImage = getMapImage(_world[i]);
                     found = true;
                 }
             }
@@ -1228,11 +1187,11 @@ namespace AzilorQuest
                 n1n1.BackgroundImage = Resources.noTile;
             }
             found = false;
-            for (int i = 0; i < world.Count; i++)
+            for (int i = 0; i < _world.Count; i++)
             {
-                if (world[i].X == hero.X && world[i].Y == hero.Y - 1 && world[i].Section == world[hero.Location].Section && world[i].Explored)
+                if (_world[i].X == _hero.X && _world[i].Y == _hero.Y - 1 && _world[i].Section == _world[_hero.Location].Section && _world[i].Explored)
                 {
-                    n0n1.BackgroundImage = getMapImage(world[i]);
+                    n0n1.BackgroundImage = getMapImage(_world[i]);
                     found = true;
                 }
             }
@@ -1241,11 +1200,11 @@ namespace AzilorQuest
                 n0n1.BackgroundImage = Resources.noTile;
             }
             found = false;
-            for (int i = 0; i < world.Count; i++)
+            for (int i = 0; i < _world.Count; i++)
             {
-                if (world[i].X == hero.X + 1 && world[i].Y == hero.Y - 1 && world[i].Section == world[hero.Location].Section && world[i].Explored)
+                if (_world[i].X == _hero.X + 1 && _world[i].Y == _hero.Y - 1 && _world[i].Section == _world[_hero.Location].Section && _world[i].Explored)
                 {
-                    p1n1.BackgroundImage = getMapImage(world[i]);
+                    p1n1.BackgroundImage = getMapImage(_world[i]);
                     found = true;
                 }
             }
@@ -1254,11 +1213,11 @@ namespace AzilorQuest
                 p1n1.BackgroundImage = Resources.noTile;
             }
             found = false;
-            for (int i = 0; i < world.Count; i++)
+            for (int i = 0; i < _world.Count; i++)
             {
-                if (world[i].X == hero.X + 2 && world[i].Y == hero.Y - 1 && world[i].Section == world[hero.Location].Section && world[i].Explored)
+                if (_world[i].X == _hero.X + 2 && _world[i].Y == _hero.Y - 1 && _world[i].Section == _world[_hero.Location].Section && _world[i].Explored)
                 {
-                    p2n1.BackgroundImage = getMapImage(world[i]);
+                    p2n1.BackgroundImage = getMapImage(_world[i]);
                     found = true;
                 }
             }
@@ -1267,11 +1226,11 @@ namespace AzilorQuest
                 p2n1.BackgroundImage = Resources.noTile;
             }
             found = false;
-            for (int i = 0; i < world.Count; i++)
+            for (int i = 0; i < _world.Count; i++)
             {
-                if (world[i].X == hero.X - 2 && world[i].Y == hero.Y + 1 && world[i].Section == world[hero.Location].Section && world[i].Explored)
+                if (_world[i].X == _hero.X - 2 && _world[i].Y == _hero.Y + 1 && _world[i].Section == _world[_hero.Location].Section && _world[i].Explored)
                 {
-                    n2p1.BackgroundImage = getMapImage(world[i]);
+                    n2p1.BackgroundImage = getMapImage(_world[i]);
                     found = true;
                 }
             }
@@ -1280,11 +1239,11 @@ namespace AzilorQuest
                 n2p1.BackgroundImage = Resources.noTile;
             }
             found = false;
-            for (int i = 0; i < world.Count; i++)
+            for (int i = 0; i < _world.Count; i++)
             {
-                if (world[i].X == hero.X - 1 && world[i].Y == hero.Y + 1 && world[i].Section == world[hero.Location].Section && world[i].Explored)
+                if (_world[i].X == _hero.X - 1 && _world[i].Y == _hero.Y + 1 && _world[i].Section == _world[_hero.Location].Section && _world[i].Explored)
                 {
-                    n1p1.BackgroundImage = getMapImage(world[i]);
+                    n1p1.BackgroundImage = getMapImage(_world[i]);
                     found = true;
                 }
             }
@@ -1293,11 +1252,11 @@ namespace AzilorQuest
                 n1p1.BackgroundImage = Resources.noTile;
             }
             found = false;
-            for (int i = 0; i < world.Count; i++)
+            for (int i = 0; i < _world.Count; i++)
             {
-                if (world[i].X == hero.X && world[i].Y == hero.Y + 1 && world[i].Section == world[hero.Location].Section && world[i].Explored)
+                if (_world[i].X == _hero.X && _world[i].Y == _hero.Y + 1 && _world[i].Section == _world[_hero.Location].Section && _world[i].Explored)
                 {
-                    n0p1.BackgroundImage = getMapImage(world[i]);
+                    n0p1.BackgroundImage = getMapImage(_world[i]);
                     found = true;
                 }
             }
@@ -1306,11 +1265,11 @@ namespace AzilorQuest
                 n0p1.BackgroundImage = Resources.noTile;
             }
             found = false;
-            for (int i = 0; i < world.Count; i++)
+            for (int i = 0; i < _world.Count; i++)
             {
-                if (world[i].X == hero.X + 1 && world[i].Y == hero.Y + 1 && world[i].Section == world[hero.Location].Section && world[i].Explored)
+                if (_world[i].X == _hero.X + 1 && _world[i].Y == _hero.Y + 1 && _world[i].Section == _world[_hero.Location].Section && _world[i].Explored)
                 {
-                    p1p1.BackgroundImage = getMapImage(world[i]);
+                    p1p1.BackgroundImage = getMapImage(_world[i]);
                     found = true;
                 }
             }
@@ -1319,11 +1278,11 @@ namespace AzilorQuest
                 p1p1.BackgroundImage = Resources.noTile;
             }
             found = false;
-            for (int i = 0; i < world.Count; i++)
+            for (int i = 0; i < _world.Count; i++)
             {
-                if (world[i].X == hero.X + 2 && world[i].Y == hero.Y + 1 && world[i].Section == world[hero.Location].Section && world[i].Explored)
+                if (_world[i].X == _hero.X + 2 && _world[i].Y == _hero.Y + 1 && _world[i].Section == _world[_hero.Location].Section && _world[i].Explored)
                 {
-                    p2p1.BackgroundImage = getMapImage(world[i]);
+                    p2p1.BackgroundImage = getMapImage(_world[i]);
                     found = true;
                 }
             }
@@ -1332,11 +1291,11 @@ namespace AzilorQuest
                 p2p1.BackgroundImage = Resources.noTile;
             }
             found = false;
-            for (int i = 0; i < world.Count; i++)
+            for (int i = 0; i < _world.Count; i++)
             {
-                if (world[i].X == hero.X - 2 && world[i].Y == hero.Y + 2 && world[i].Section == world[hero.Location].Section && world[i].Explored)
+                if (_world[i].X == _hero.X - 2 && _world[i].Y == _hero.Y + 2 && _world[i].Section == _world[_hero.Location].Section && _world[i].Explored)
                 {
-                    n2p2.BackgroundImage = getMapImage(world[i]);
+                    n2p2.BackgroundImage = getMapImage(_world[i]);
                     found = true;
                 }
             }
@@ -1345,11 +1304,11 @@ namespace AzilorQuest
                 n2p2.BackgroundImage = Resources.noTile;
             }
             found = false;
-            for (int i = 0; i < world.Count; i++)
+            for (int i = 0; i < _world.Count; i++)
             {
-                if (world[i].X == hero.X - 1 && world[i].Y == hero.Y + 2 && world[i].Section == world[hero.Location].Section && world[i].Explored)
+                if (_world[i].X == _hero.X - 1 && _world[i].Y == _hero.Y + 2 && _world[i].Section == _world[_hero.Location].Section && _world[i].Explored)
                 {
-                    n1p2.BackgroundImage = getMapImage(world[i]);
+                    n1p2.BackgroundImage = getMapImage(_world[i]);
                     found = true;
                 }
             }
@@ -1358,11 +1317,11 @@ namespace AzilorQuest
                 n1p2.BackgroundImage = Resources.noTile;
             }
             found = false;
-            for (int i = 0; i < world.Count; i++)
+            for (int i = 0; i < _world.Count; i++)
             {
-                if (world[i].X == hero.X && world[i].Y == hero.Y + 2 && world[i].Section == world[hero.Location].Section && world[i].Explored)
+                if (_world[i].X == _hero.X && _world[i].Y == _hero.Y + 2 && _world[i].Section == _world[_hero.Location].Section && _world[i].Explored)
                 {
-                    n0p2.BackgroundImage = getMapImage(world[i]);
+                    n0p2.BackgroundImage = getMapImage(_world[i]);
                     found = true;
                 }
             }
@@ -1371,11 +1330,11 @@ namespace AzilorQuest
                 n0p2.BackgroundImage = Resources.noTile;
             }
             found = false;
-            for (int i = 0; i < world.Count; i++)
+            for (int i = 0; i < _world.Count; i++)
             {
-                if (world[i].X == hero.X + 1 && world[i].Y == hero.Y + 2 && world[i].Section == world[hero.Location].Section && world[i].Explored)
+                if (_world[i].X == _hero.X + 1 && _world[i].Y == _hero.Y + 2 && _world[i].Section == _world[_hero.Location].Section && _world[i].Explored)
                 {
-                    p1p2.BackgroundImage = getMapImage(world[i]);
+                    p1p2.BackgroundImage = getMapImage(_world[i]);
                     found = true;
                 }
             }
@@ -1384,11 +1343,11 @@ namespace AzilorQuest
                 p1p2.BackgroundImage = Resources.noTile;
             }
             found = false;
-            for (int i = 0; i < world.Count; i++)
+            for (int i = 0; i < _world.Count; i++)
             {
-                if (world[i].X == hero.X + 2 && world[i].Y == hero.Y + 2 && world[i].Section == world[hero.Location].Section && world[i].Explored)
+                if (_world[i].X == _hero.X + 2 && _world[i].Y == _hero.Y + 2 && _world[i].Section == _world[_hero.Location].Section && _world[i].Explored)
                 {
-                    p2p2.BackgroundImage = getMapImage(world[i]);
+                    p2p2.BackgroundImage = getMapImage(_world[i]);
                     found = true;
                 }
             }
@@ -1397,7 +1356,7 @@ namespace AzilorQuest
                 p2p2.BackgroundImage = Resources.noTile;
             }
 
-            switch (hero.Facing)
+            switch (_hero.Facing)
             {
                 case "North":
                     centerMM.Image = Resources.MapArrowNorth;
